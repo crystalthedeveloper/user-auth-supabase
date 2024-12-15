@@ -1,0 +1,84 @@
+<script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  if (!window.getSupabaseClient) {
+    window.getSupabaseClient = () => {
+      try {
+        if (!window.supabase) {
+          const supabaseUrl = process.env.SUPABASE_URL;
+          const supabaseKey = process.env.SUPABASE_KEY;
+          const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+        }
+        return window.supabase;
+      } catch (error) {
+        console.error("Error initializing Supabase:", error);
+        throw new Error("Failed to initialize Supabase. Please contact support.");
+      }
+    };
+  }
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const supabase = getSupabaseClient();
+
+    // Signup Form
+    const signupForm = document.querySelector("#signup-form");
+    if (signupForm) {
+      signupForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = document.querySelector("#signup-email").value.trim();
+        const password = document.querySelector("#signup-password").value.trim();
+        const fullName = document.querySelector("#signup-name").value.trim();
+        const submitButton = signupForm.querySelector("button");
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Signing Up...";
+
+        try {
+          if (!email || !password || !fullName) {
+            throw new Error("All fields are required.");
+          }
+
+          const { data, error } = await supabase.auth.signUp(
+            { email, password },
+            { data: { full_name: fullName } }
+          );
+
+          if (error) throw new Error(error.message);
+          alert("Signup successful! Please verify your email to log in.");
+        } catch (error) {
+          alert(`Signup error: ${error.message}`);
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Sign Up";
+        }
+      });
+    }
+
+    // Login Form
+    const loginForm = document.querySelector("#login-form");
+    if (loginForm) {
+      loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const email = document.querySelector("#login-email").value.trim();
+        const password = document.querySelector("#login-password").value.trim();
+        const submitButton = loginForm.querySelector("button");
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Logging In...";
+
+        try {
+          const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+          if (error) throw new Error(error.message);
+          alert("Login successful!");
+          window.location.href = "/dashboard"; // Redirect to dashboard or home
+        } catch (error) {
+          alert(`Login error: ${error.message}`);
+        } finally {
+          submitButton.disabled = false;
+          submitButton.textContent = "Log In";
+        }
+      });
+    }
+  });
+</script>
