@@ -5,17 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signup</title>
     <link rel="stylesheet" href="styles.css" />
-    <script>
-      // Inject environment variables securely
+    <script type="module">
+      // Replace these with your Supabase credentials
       const SUPABASE_URL = "https://pkaeqqqxhkgosfppzmmt.supabase.co";
-      const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrYWVxcXF4aGtnb3NmcHB6bW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyNzEyMjgsImV4cCI6MjA0OTg0NzIyOH0.dpxd-Y6Zvfu_1tcfELPNV7acq6X9tWMd8paNK28ncsc";
+      const SUPABASE_KEY =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrYWVxcXF4aGtnb3NmcHB6bW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyNzEyMjgsImV4cCI6MjA0OTg0NzIyOH0.dpxd-Y6Zvfu_1tcfELPNV7acq6X9tWMd8paNK28ncsc";
+
+      import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
 
       // Initialize Supabase
-      async function initializeSupabase() {
-        const { createClient } = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2");
-        const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
+      const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
 
+      document.addEventListener("DOMContentLoaded", () => {
         const signupForm = document.querySelector("#signup-form");
+
         signupForm.addEventListener("submit", async (event) => {
           event.preventDefault();
 
@@ -25,29 +28,29 @@
           const agreePolicy = document.querySelector("#agree-policy").checked;
           const agreeMarketing = document.querySelector("#agree-marketing").checked;
 
-          // Validate that the required checkbox is checked
+          // Check privacy policy agreement
           if (!agreePolicy) {
             alert("You must agree to the privacy policy and terms of service.");
             return;
           }
 
           try {
-            // Add marketing consent to user metadata
+            // Add user data and marketing consent
             const { error } = await supabase.auth.signUp(
               { email, password },
               { data: { full_name: fullName, marketing_consent: agreeMarketing } }
             );
+
             if (error) throw error;
 
             alert("Signup successful! Check your email to verify your account.");
-            window.location.href = "/login.html"; // Redirect to login page
+            window.location.href = "https://www.crystalthedeveloper.ca/login";
           } catch (err) {
+            console.error("Signup error:", err.message);
             alert(`Signup failed: ${err.message}`);
           }
         });
-      }
-
-      document.addEventListener("DOMContentLoaded", initializeSupabase);
+      });
     </script>
   </head>
   <body>
@@ -99,7 +102,8 @@
 
       <!-- Log In Section -->
       <div class="login-redirect">
-        <p>Already have an account? 
+        <p>
+          Already have an account?
           <a href="https://www.crystalthedeveloper.ca/login" target="_blank">Log In</a>
         </p>
       </div>
