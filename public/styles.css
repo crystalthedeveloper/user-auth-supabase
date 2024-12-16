@@ -39,6 +39,7 @@ body {
     margin-bottom: 20px;
     display: flex;
     flex-direction: column;
+    font-size: 1.2rem;
   }
   
   label {
