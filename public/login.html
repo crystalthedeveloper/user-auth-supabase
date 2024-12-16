@@ -65,7 +65,7 @@
 
           try {
             const { error } = await supabase.auth.resetPasswordForEmail(email, {
-              redirectTo: "https://www.crystalthedeveloper.ca/reset-password",
+              redirectTo: "https://www.crystalthedeveloper.ca/user-pages/reset-password",
             });
 
             if (error) throw error;
@@ -116,7 +116,7 @@
       <div class="login-redirect">
         <p>
           Don't have an account?
-          <a href="https://www.crystalthedeveloper.ca/signup" target="_blank">Sign Up</a>
+          <a href="https://www.crystalthedeveloper.ca/user-pages/signup" target="_blank">Sign Up</a>
         </p>
       </div>
     </form>

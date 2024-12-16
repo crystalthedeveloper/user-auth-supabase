@@ -48,7 +48,7 @@
             if (error) throw error;
 
             alert("Signup successful! Check your email to verify your account.");
-            window.location.href = "https://www.crystalthedeveloper.ca/login";
+            window.location.href = "https://www.crystalthedeveloper.ca/user-pages/login";
           } catch (err) {
             console.error("Signup error:", err.message);
             alert(`Signup failed: ${err.message}`);
@@ -96,8 +96,8 @@
         <input type="checkbox" id="agree-policy" name="agree-policy" required />
         <label for="agree-policy">
           By creating an account, I agree to this website's
-          <a href="/privacy-policy" target="_blank">privacy policy</a> and
-          <a href="/terms-of-service" target="_blank">terms of service</a>.
+          <a href="https://www.crystalthedeveloper.ca/legal/privacy-cookies" target="_blank">privacy policy</a> and
+          <a href="https://www.crystalthedeveloper.ca/legal/terms-of-service" target="_blank">terms of service</a>.
         </label>
       </div>
 
@@ -113,7 +113,7 @@
       <div class="login-redirect">
         <p>
           Already have an account?
-          <a href="https://www.crystalthedeveloper.ca/login" target="_blank">Log In</a>
+          <a href="https://www.crystalthedeveloper.ca/user-pages/login" target="_blank">Log In</a>
         </p>
       </div>
     </form>
