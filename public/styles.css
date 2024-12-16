@@ -3,7 +3,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
-    background: black;
+    
     color: #fff;
     display: flex;
     justify-content: center;
@@ -107,4 +107,24 @@ body {
   
   a:hover {
     text-decoration: underline;
+  }
+
+  /* Login Redirect Section */
+.login-redirect {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 1rem;
+    color: #ffffff;
+  }
+  
+  .login-redirect a {
+    color: #ffe600;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .login-redirect a:hover {
+    text-decoration: underline;
+    color: #ffdb4d;
   }
