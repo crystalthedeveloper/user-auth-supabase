@@ -11,12 +11,11 @@
       const SUPABASE_KEY =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrYWVxcXF4aGtnb3NmcHB6bW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyNzEyMjgsImV4cCI6MjA0OTg0NzIyOH0.dpxd-Y6Zvfu_1tcfELPNV7acq6X9tWMd8paNK28ncsc";
 
-      import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
+      // Fix import issue for Supabase CDN
+      async function initializeSupabase() {
+        const supabaseModule = await import("https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2");
+        const supabase = supabaseModule.default.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      // Initialize Supabase
-      const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
-      document.addEventListener("DOMContentLoaded", () => {
         const signupForm = document.querySelector("#signup-form");
 
         signupForm.addEventListener("submit", async (event) => {
@@ -50,7 +49,9 @@
             alert(`Signup failed: ${err.message}`);
           }
         });
-      });
+      }
+
+      document.addEventListener("DOMContentLoaded", initializeSupabase);
     </script>
   </head>
   <body>
@@ -62,7 +63,7 @@
           type="email"
           id="signup-email"
           name="email"
-          placeholder="Enter your email"
+          placeholder="💌 crystalthedeveloper@gmail.com"
           required
         />
       </div>
@@ -72,7 +73,7 @@
           type="text"
           id="signup-name"
           name="name"
-          placeholder="Enter your full name"
+          placeholder="👽 Enter your name"
           required
         />
       </div>
@@ -82,7 +83,7 @@
           type="password"
           id="signup-password"
           name="password"
-          placeholder="Enter a secure password"
+          placeholder="🔐 password"
           required
         />
       </div>

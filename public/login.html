@@ -27,7 +27,8 @@
           const password = document.querySelector("#login-password").value.trim();
 
           try {
-            const { error } = await supabase.auth.signInWithPassword({
+            // Attempt login with Supabase
+            const { data, error } = await supabase.auth.signInWithPassword({
               email,
               password,
             });
@@ -54,7 +55,7 @@
           type="email"
           id="login-email"
           name="email"
-          placeholder="💌"
+          placeholder="💌 Enter your email"
           required
         />
       </div>
@@ -64,7 +65,7 @@
           type="password"
           id="login-password"
           name="password"
-          placeholder="Enter your password"
+          placeholder="🔐 Enter your password"
           required
         />
       </div>
