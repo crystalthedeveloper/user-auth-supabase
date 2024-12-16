@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
-    <!-- Link to CSS file -->
     <link rel="stylesheet" href="styles.css" />
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
     <script>
@@ -14,11 +13,10 @@
         const SUPABASE_KEY =
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrYWVxcXF4aGtnb3NmcHB6bW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyNzEyMjgsImV4cCI6MjA0OTg0NzIyOH0.dpxd-Y6Zvfu_1tcfELPNV7acq6X9tWMd8paNK28ncsc";
 
-        // Initialize Supabase
         const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
+        // Login Form
         const loginForm = document.querySelector("#login-form");
-
         loginForm.addEventListener("submit", async (event) => {
           event.preventDefault();
 
@@ -26,19 +24,40 @@
           const password = document.querySelector("#login-password").value.trim();
 
           try {
-            // Attempt login with Supabase
-            const { data, error } = await supabase.auth.signInWithPassword({
-              email,
-              password,
-            });
+            const { error } = await supabase.auth.signInWithPassword({ email, password });
 
             if (error) throw error;
 
             alert("Login successful!");
-            window.location.href = "https://www.crystalthedeveloper.ca/dashboard"; // Redirect after login
+            window.location.href = "https://www.crystalthedeveloper.ca/dashboard";
           } catch (err) {
             console.error("Login error:", err.message);
             alert(`Login failed: ${err.message}`);
+          }
+        });
+
+        // Forgot Password
+        const forgotPasswordLink = document.querySelector("#forgot-password");
+        forgotPasswordLink.addEventListener("click", async (event) => {
+          event.preventDefault();
+
+          const email = prompt("Enter your email to reset your password:");
+          if (!email) {
+            alert("Email is required.");
+            return;
+          }
+
+          try {
+            const { error } = await supabase.auth.resetPasswordForEmail(email, {
+              redirectTo: "https://www.crystalthedeveloper.ca/reset-password",
+            });
+
+            if (error) throw error;
+
+            alert("Password reset email sent! Check your inbox.");
+          } catch (err) {
+            console.error("Forgot Password Error:", err.message);
+            alert(`Failed to send password reset email: ${err.message}`);
           }
         });
       });
@@ -73,9 +92,7 @@
       <!-- Forgot Password Section -->
       <div class="login-redirect">
         <p>
-          <a href="https://www.crystalthedeveloper.ca/forgot-password" target="_blank">
-            Forgot your password?
-          </a>
+          <a href="#" id="forgot-password">Forgot your password?</a>
         </p>
       </div>
 

@@ -24,19 +24,24 @@
           const password = document.querySelector("#signup-password").value.trim();
           const firstName = document.querySelector("#signup-first-name").value.trim();
           const agreePolicy = document.querySelector("#agree-policy").checked;
+          const agreeMarketing = document.querySelector("#agree-marketing").checked;
 
+          // Check for required policy agreement
           if (!agreePolicy) {
             alert("You must agree to the privacy policy and terms of service.");
             return;
           }
 
           try {
-            // Add user's first name in metadata
+            // Add first name and marketing consent to metadata
             const { data, error } = await supabase.auth.signUp({
               email,
               password,
               options: {
-                data: { first_name: firstName },
+                data: {
+                  first_name: firstName,
+                  marketing_consent: agreeMarketing,
+                },
               },
             });
 
@@ -85,6 +90,8 @@
           required
         />
       </div>
+
+      <!-- Privacy Policy Checkbox -->
       <div class="checkbox-container">
         <input type="checkbox" id="agree-policy" name="agree-policy" required />
         <label for="agree-policy">
@@ -93,6 +100,13 @@
           <a href="/terms-of-service" target="_blank">terms of service</a>.
         </label>
       </div>
+
+      <!-- Marketing Consent Checkbox -->
+      <div class="checkbox-container">
+        <input type="checkbox" id="agree-marketing" name="agree-marketing" />
+        <label for="agree-marketing">I consent to receive marketing emails.</label>
+      </div>
+
       <button type="submit">Sign Up</button>
 
       <!-- Log In Section -->
