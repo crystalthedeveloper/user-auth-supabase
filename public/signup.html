@@ -22,21 +22,23 @@
 
           const email = document.querySelector("#signup-email").value.trim();
           const password = document.querySelector("#signup-password").value.trim();
-          const fullName = document.querySelector("#signup-name").value.trim();
+          const firstName = document.querySelector("#signup-first-name").value.trim();
           const agreePolicy = document.querySelector("#agree-policy").checked;
-          const agreeMarketing = document.querySelector("#agree-marketing").checked;
 
-          // Check privacy policy agreement
           if (!agreePolicy) {
             alert("You must agree to the privacy policy and terms of service.");
             return;
           }
 
           try {
-            const { data, error } = await supabase.auth.signUp(
-              { email, password },
-              { data: { full_name: fullName, marketing_consent: agreeMarketing } }
-            );
+            // Add user's first name in metadata
+            const { data, error } = await supabase.auth.signUp({
+              email,
+              password,
+              options: {
+                data: { first_name: firstName },
+              },
+            });
 
             if (error) throw error;
 
@@ -59,17 +61,17 @@
           type="email"
           id="signup-email"
           name="email"
-          placeholder="💌 crystalthedeveloper@gmail.com"
+          placeholder="💌 Enter your email"
           required
         />
       </div>
       <div class="input-text-wrapper">
-        <label for="signup-name">Name</label>
+        <label for="signup-first-name">First Name</label>
         <input
           type="text"
-          id="signup-name"
-          name="name"
-          placeholder="👽 Enter your name"
+          id="signup-first-name"
+          name="first-name"
+          placeholder="👽 Enter your first name"
           required
         />
       </div>
@@ -90,10 +92,6 @@
           <a href="/privacy-policy" target="_blank">privacy policy</a> and
           <a href="/terms-of-service" target="_blank">terms of service</a>.
         </label>
-      </div>
-      <div class="checkbox-container">
-        <input type="checkbox" id="agree-marketing" name="agree-marketing" />
-        <label for="agree-marketing">I consent to receive marketing emails.</label>
       </div>
       <button type="submit">Sign Up</button>
 
