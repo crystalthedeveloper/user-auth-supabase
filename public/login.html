@@ -6,18 +6,17 @@
     <title>Login</title>
     <!-- Link to CSS file -->
     <link rel="stylesheet" href="styles.css" />
-    <script type="module">
-      // Supabase credentials securely injected
-      const SUPABASE_URL = "https://pkaeqqqxhkgosfppzmmt.supabase.co";
-      const SUPABASE_KEY =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrYWVxcXF4aGtnb3NmcHB6bW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyNzEyMjgsImV4cCI6MjA0OTg0NzIyOH0.dpxd-Y6Zvfu_1tcfELPNV7acq6X9tWMd8paNK28ncsc";
-
-      import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2";
-
-      // Initialize Supabase
-      const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script>
       document.addEventListener("DOMContentLoaded", () => {
+        // Supabase credentials
+        const SUPABASE_URL = "https://pkaeqqqxhkgosfppzmmt.supabase.co";
+        const SUPABASE_KEY =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBrYWVxcXF4aGtnb3NmcHB6bW10Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzQyNzEyMjgsImV4cCI6MjA0OTg0NzIyOH0.dpxd-Y6Zvfu_1tcfELPNV7acq6X9tWMd8paNK28ncsc";
+
+        // Initialize Supabase
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
         const loginForm = document.querySelector("#login-form");
 
         loginForm.addEventListener("submit", async (event) => {
