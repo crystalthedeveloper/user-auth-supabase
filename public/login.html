@@ -24,12 +24,28 @@
           const password = document.querySelector("#login-password").value.trim();
 
           try {
-            const { error } = await supabase.auth.signInWithPassword({ email, password });
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
             if (error) throw error;
 
+            const { user, session } = data;
+
+            // Log user information and access token
+            console.log("User ID:", user.id);
+            console.log("Access Token:", session.access_token);
+
+            // Optional: Send the token and user ID to Unreal Engine or other backend
+            await fetch("http://localhost:8080/store-token", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                token: session.access_token,
+                userId: user.id,
+              }),
+            });
+
             alert("Login successful!");
-            window.location.href = "https://www.crystalthedeveloper.ca/dashboard";
+            window.location.href = "https://www.crystalthedeveloper.ca/crystalscrypt";
           } catch (err) {
             console.error("Login error:", err.message);
             alert(`Login failed: ${err.message}`);
