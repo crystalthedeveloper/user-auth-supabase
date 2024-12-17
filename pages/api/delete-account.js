@@ -1,10 +1,11 @@
-// /api/delete-account.js
+// pages/api/delete-account.js
 import { createClient } from "@supabase/supabase-js";
 
 // Load environment variables
 const supabaseUrl = process.env.SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-
+console.log("SUPABASE_URL:", process.env.SUPABASE_URL);
+console.log("SERVICE_ROLE_KEY Loaded:", !!process.env.SUPABASE_SERVICE_ROLE_KEY);
 // Initialize Supabase Admin client
 const supabaseAdmin = createClient(supabaseUrl, serviceRoleKey, {
   auth: { persistSession: false },
